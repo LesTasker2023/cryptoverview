@@ -83,27 +83,27 @@ export const Ticker = ({ currencyPair }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (
-      publicData &&
-      publicData.channel === 'book' &&
-      publicData.data &&
-      publicData.data[0] &&
-      publicData.data[0].asks &&
-      publicData.data[0].asks[0] &&
-      publicData.data[0].asks[0].price &&
-      publicData.data[0].asks[0].price > 0
-    ) {
-      const prevPrice = tickerData;
-      const newPrice = publicData.data[0].asks[0].price.toString();
-      setTickerData(newPrice);
-      if (newPrice < prevPrice) {
-        setTickerColour('red');
-      } else if (newPrice > prevPrice) {
-        setTickerColour('green');
-      } else {
-        setTickerColour('black');
-      }
-    }
+    // if (
+    //   publicData &&
+    //   publicData.channel === 'book' &&
+    //   publicData.data &&
+    //   publicData.data[0] &&
+    //   publicData.data[0].asks &&
+    //   publicData.data[0].asks[0] &&
+    //   publicData.data[0].asks[0].price &&
+    //   publicData.data[0].asks[0].price > 0
+    // ) {
+    //   const prevPrice = tickerData;
+    //   const newPrice = publicData.data[0].asks[0].price.toString();
+    //   setTickerData(newPrice);
+    //   if (newPrice < prevPrice) {
+    //     setTickerColour('red');
+    //   } else if (newPrice > prevPrice) {
+    //     setTickerColour('green');
+    //   } else {
+    //     setTickerColour('black');
+    //   }
+    // }
   }, [publicData]);
 
   return (
