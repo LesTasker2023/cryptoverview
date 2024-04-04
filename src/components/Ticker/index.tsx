@@ -123,7 +123,7 @@ export const Ticker = ({ symbol }: Props) => {
         'Loading '
       ) : (
         <h3 className="ticker__label" style={{ color: `${tickerColour}` }}>
-          {tickerData && `$${tickerData}`}
+          {tickerData ? `$${tickerData}` : 'No Data'}
         </h3>
       )}
 

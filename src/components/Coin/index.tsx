@@ -24,11 +24,14 @@ export const Coin = ({
   last_updated,
   quote,
   coinLogoUrl,
+  isMini,
+  isSelected,
 }: CoinDetails) => {
-  console.log('🚀 ~ coinLogoUrl:', coinLogoUrl);
-
   return (
-    <div className="coin">
+    <div
+      title={symbol ? symbol : ''}
+      className={`coin ${isMini ? 'coin--mini' : ''} ${isSelected && isMini ? 'coin--selected' : ''}`}
+    >
       <img
         src={`https://cryptobubbles.net/backend/data/logos/${id}.png`}
         alt=""

@@ -15,4 +15,12 @@
     border-radius: 100%;
     width: 100%;
   }
+  &--mini {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+  }
+  &--selected {
+    border: 3px solid green;
+  }
 }

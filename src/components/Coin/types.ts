@@ -35,6 +35,8 @@ interface CoinDetails {
     };
   };
   coinLogoUrl: string;
+  isMini: boolean;
+  isSelected: boolean;
 }
 
 export default CoinDetails;
