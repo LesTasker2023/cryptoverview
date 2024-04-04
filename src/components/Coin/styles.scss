@@ -1,0 +1,17 @@
+.coin {
+  display: flex;
+  width: 62px;
+  height: 62px;
+  padding: 12px;
+
+  overflow: hidden;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid green;
+  border-radius: 100%;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
