@@ -2,16 +2,17 @@
   display: flex;
   width: 62px;
   height: 62px;
-  padding: 12px;
+  padding: 6px;
 
   overflow: hidden;
   color: #fff;
   justify-content: center;
   align-items: center;
-  border: 2px solid green;
   border-radius: 100%;
+  border: 3px solid #fff;
   img {
     height: 100%;
+    border-radius: 100%;
     width: 100%;
   }
 }

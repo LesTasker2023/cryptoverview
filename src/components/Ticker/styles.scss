@@ -1,3 +1,10 @@
 .ticker {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-left: 12px;
+  &__label {
+    color: #fff;
+  }
 }

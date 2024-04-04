@@ -1,7 +1,7 @@
 interface CoinDetails {
   id: number | null;
   name: string | null;
-  symbol: string | null;
+  symbol: string;
   slug: string | null;
   num_market_pairs: number | null;
   date_added: string | null;

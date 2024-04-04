@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Props from './types';
+import './styles.scss';
 
 const PublicWebSocketUrl = 'wss://ws.kraken.com/v2';
 
@@ -40,22 +41,26 @@ interface BookChannelUpdate {
   data: BookUpdate[];
 }
 
-export const Ticker = ({ currencyPair }: Props) => {
+export const Ticker = ({ symbol }: Props) => {
+  const pair = `${symbol}/USD`;
+  const [isLoading, setIsLoading] = useState(true);
   const [publicSocket, setPublicSocket] = useState<WebSocket>();
-  const [publicData, setPublicData] = useState<BookChannelUpdate | null>(null);
+  const [publicData, setPublicData] = useState<TickerChannelUpdate | null>(
+    null
+  );
   const [tickerData, setTickerData] = useState<string>('');
+  const [change, setChange] = useState<number>(0);
   const [tickerColour, setTickerColour] = useState<string>('#000');
 
-  console.log(tickerData);
-  const subscribeToPublicChannel = (currencyPair: string) => {
+  const subscribeToPublicChannel = () => {
     if (publicSocket) {
       publicSocket.send(
         JSON.stringify({
           method: 'subscribe',
           params: {
-            channel: 'book',
+            channel: 'ticker',
             snapshot: true,
-            symbol: ['BTC/USD'],
+            symbol: [pair],
           },
         })
       );
@@ -75,6 +80,7 @@ export const Ticker = ({ currencyPair }: Props) => {
     publicSocketInstance.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setPublicData(data);
+      setIsLoading(false);
     };
 
     return () => {
@@ -83,40 +89,50 @@ export const Ticker = ({ currencyPair }: Props) => {
   }, []);
 
   useEffect(() => {
-    // if (
-    //   publicData &&
-    //   publicData.channel === 'book' &&
-    //   publicData.data &&
-    //   publicData.data[0] &&
-    //   publicData.data[0].asks &&
-    //   publicData.data[0].asks[0] &&
-    //   publicData.data[0].asks[0].price &&
-    //   publicData.data[0].asks[0].price > 0
-    // ) {
-    //   const prevPrice = tickerData;
-    //   const newPrice = publicData.data[0].asks[0].price.toString();
-    //   setTickerData(newPrice);
-    //   if (newPrice < prevPrice) {
-    //     setTickerColour('red');
-    //   } else if (newPrice > prevPrice) {
-    //     setTickerColour('green');
-    //   } else {
-    //     setTickerColour('black');
-    //   }
-    // }
+    if (
+      publicData &&
+      publicData.channel === 'ticker' &&
+      publicData.data &&
+      publicData.data[0] &&
+      publicData.data[0].ask
+    ) {
+      const prevPrice = tickerData;
+      const newPrice = publicData.data[0].ask.toString();
+      setTickerData(newPrice);
+      setChange(publicData.data[0].change_pct);
+      if (newPrice < prevPrice) {
+        setTickerColour('red');
+      } else if (newPrice > prevPrice) {
+        setTickerColour('green');
+      } else {
+        setTickerColour('white');
+      }
+    }
   }, [publicData]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      subscribeToPublicChannel();
+    }
+  }, [isLoading]);
+
   return (
-    <div>
-      <h1>Public Data</h1>
+    <div className="ticker">
+      <h3 className="ticker__label">{symbol}</h3>
+      {isLoading ? (
+        'Loading '
+      ) : (
+        <h3 className="ticker__label" style={{ color: `${tickerColour}` }}>
+          {tickerData && `$${tickerData}`}
+        </h3>
+      )}
 
-      {/* <pre>{JSON.stringify(publicData?.data, null, 2)}</pre> */}
-
-      <h1 style={{ color: `${tickerColour}` }}>${tickerData}</h1>
-
-      <button onClick={() => subscribeToPublicChannel(currencyPair)}>
-        Subscribe to BTC
-      </button>
+      <h3
+        className="ticker__label"
+        style={{ color: `${change > 0 ? 'green' : 'red'}` }}
+      >
+        {change && `${change.toString()}%`}
+      </h3>
     </div>
   );
 };
