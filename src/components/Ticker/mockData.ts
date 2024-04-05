@@ -1,7 +1,6 @@
 import Props from './types';
 
 const Default: Props = {
-  currencyPair: 'BTC/USD',
+  symbol: 'BTC',
 };
-
 export default Default;

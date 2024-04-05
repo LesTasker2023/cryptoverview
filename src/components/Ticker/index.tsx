@@ -4,17 +4,23 @@ import './styles.scss';
 
 const PublicWebSocketUrl = 'wss://ws.kraken.com/v2';
 
-interface Bid {
-  price: number;
-  qty: number;
-}
+// interface Bid {
+//   price: number;
+//   qty: number;
+// }
 
-interface BookUpdate {
-  asks: Bid[];
-  bids: Bid[];
-  checksum: number;
-  symbol: string;
-}
+// interface BookUpdate {
+//   asks: Bid[];
+//   bids: Bid[];
+//   checksum: number;
+//   symbol: string;
+// }
+
+// interface BookChannelUpdate {
+//   channel: 'ticker' | 'heartbeat' | 'status' | 'book';
+//   type: string;
+//   data: BookUpdate[];
+// }
 interface TickerUpdate {
   symbol: string;
   bid: number;
@@ -34,11 +40,6 @@ interface TickerChannelUpdate {
   channel: 'ticker' | 'heartbeat' | 'status' | 'book';
   type: string;
   data: TickerUpdate[];
-}
-interface BookChannelUpdate {
-  channel: 'ticker' | 'heartbeat' | 'status' | 'book';
-  type: string;
-  data: BookUpdate[];
 }
 
 export const Ticker = ({ symbol }: Props) => {
@@ -96,9 +97,10 @@ export const Ticker = ({ symbol }: Props) => {
       publicData.data[0] &&
       publicData.data[0].ask
     ) {
-      const prevPrice = tickerData;
+      console.log('🚀 ~ Ticker ~ publicData:', symbol, publicData.data[0]);
+      const prevPrice = publicData.data[0].last.toString();
       const newPrice = publicData.data[0].ask.toString();
-      setTickerData(newPrice);
+      setTickerData(prevPrice);
       setChange(publicData.data[0].change_pct);
       if (newPrice < prevPrice) {
         setTickerColour('red');

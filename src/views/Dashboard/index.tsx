@@ -3,9 +3,11 @@ import type Props from './types';
 import { Coin } from '../../components/Coin';
 import { getLogo } from '../../utils/functions';
 import { Ticker } from '../../components/Ticker';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { InstrumentCard } from '../../components/InstrumentCard';
+import CoinDetails from '../../components/Coin/types';
 
-const list = ['BTC', 'ETH', 'LTC', 'DOGE', 'PEPE', 'SOL'];
+// const list = ['BTC', 'ETH', 'LTC', 'DOGE', 'PEPE', 'SOL'];
 
 export const Dashboard = ({ data, status }: Props) => {
   const [favourites, setFavourites] = useState<string[]>([]);
@@ -34,33 +36,21 @@ export const Dashboard = ({ data, status }: Props) => {
                   isSelected={favourites.includes(coin.symbol)}
                   isMini={true}
                   {...coin}
-                  coinLogoUrl={
-                    coin.name && coin.symbol
-                      ? getLogo(coin.name, coin.symbol)
-                      : ''
-                  }
                 />
               </div>
             );
           })}
       </div>
       {data?.map((coin) => {
+        const coinProps: CoinDetails = {
+          symbol: coin.symbol,
+          isMini: false,
+          isSelected: false,
+          id: coin.id,
+          name: coin.name,
+        };
         if (coin && favourites.includes(coin.symbol)) {
-          return (
-            <div key={coin.symbol} className="dashboard__coin-list">
-              <Coin
-                isSelected={favourites.includes(coin.symbol)}
-                isMini={false}
-                {...coin}
-                coinLogoUrl={
-                  coin.name && coin.symbol
-                    ? getLogo(coin.name, coin.symbol)
-                    : ''
-                }
-              />
-              {coin.symbol?.length > 0 && <Ticker symbol={coin.symbol} />}
-            </div>
-          );
+          return <InstrumentCard coin={coinProps} price={''} pct={''} />;
         } else {
           return null;
         }
