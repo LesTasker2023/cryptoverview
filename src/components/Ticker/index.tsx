@@ -4,23 +4,6 @@ import './styles.scss';
 
 const PublicWebSocketUrl = 'wss://ws.kraken.com/v2';
 
-// interface Bid {
-//   price: number;
-//   qty: number;
-// }
-
-// interface BookUpdate {
-//   asks: Bid[];
-//   bids: Bid[];
-//   checksum: number;
-//   symbol: string;
-// }
-
-// interface BookChannelUpdate {
-//   channel: 'ticker' | 'heartbeat' | 'status' | 'book';
-//   type: string;
-//   data: BookUpdate[];
-// }
 interface TickerUpdate {
   symbol: string;
   bid: number;

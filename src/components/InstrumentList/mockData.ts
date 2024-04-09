@@ -1,7 +1,7 @@
 import Props from './types';
 
 const Default: Props = {
-  instruments: ['BTC', 'ETH', 'LTC', 'BCH', 'XRP', 'EOS'],
+  instruments: [{ symbol: 'BTC', id: 1 }],
 };
 
 export default Default;

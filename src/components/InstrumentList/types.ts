@@ -1,3 +1,8 @@
 export default interface Props {
-  instruments: string[];
+  instruments: CoinData[];
+}
+
+interface CoinData {
+  symbol: string;
+  id: number;
 }
