@@ -2,25 +2,43 @@
   display: flex;
   width: 62px;
   height: 62px;
-  padding: 6px;
 
   overflow: hidden;
   color: #fff;
   justify-content: center;
   align-items: center;
-  border-radius: 100%;
-  border: 3px solid #fff;
+  border-radius: 50px;
+  background: #c7c7c7;
+  box-shadow:
+    -19px 19px 38px #505050,
+    19px -19px 38px #ffffff;
+
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
   img {
     height: 100%;
     border-radius: 100%;
     width: 100%;
+    margin: auto;
   }
   &--mini {
     width: 28px;
     height: 28px;
-    padding: 2px;
+
+    box-shadow:
+      -4px 4px 9px #505050,
+      4px -4px 9px #ffffff;
   }
   &--selected {
-    border: 3px solid green;
+    border: 3px solid #009717;
+
+    box-shadow: none;
+    transition: 0.3s ease;
   }
 }
