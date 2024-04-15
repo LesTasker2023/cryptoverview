@@ -19,14 +19,15 @@ const TradingViewWidget = ({ id, symbol }: Props) => {
       width: '230',
       height: '100',
       locale: 'en',
-      dateRange: '3m',
+      dateRange: '1D',
       colorTheme: 'dark',
+      underLineColor: 'rgba(66, 66, 66, 0)',
+      underLineBottomColor: 'rgba(66, 66, 66, 0)',
       isTransparent: true,
       autosize: false,
       largeChartUrl: '',
-      noTimeScale: true,
+      noTimeScale: false,
       chartOnly: true,
-      containerId: 'adjsgfv',
     });
 
     const widgetContainer = document.querySelector(
