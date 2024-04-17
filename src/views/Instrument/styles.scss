@@ -1,3 +1,16 @@
 .instrument {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 75vh;
+  gap: 12px;
+  div {
+    height: 100%;
+    width: 100%;
+  }
+}
+.instrument-container {
   display: flex;
+  flex-direction: column;
+
+  background-color: #000;
 }

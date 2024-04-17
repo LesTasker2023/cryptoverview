@@ -6,10 +6,8 @@ interface Props {
 }
 
 const TradingViewWidget = ({ id, symbol }: Props) => {
-  const [loading, setLoading] = useState<boolean>(false);
   const pair = `KRAKEN:${symbol.replace('/', '')}`;
   useEffect(() => {
-    setLoading(true);
     const script = document.createElement('script');
     script.src =
       'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js';
@@ -19,7 +17,7 @@ const TradingViewWidget = ({ id, symbol }: Props) => {
       width: '230',
       height: '100',
       locale: 'en',
-      dateRange: '1D',
+      dateRange: '1M',
       colorTheme: 'dark',
       underLineColor: 'rgba(66, 66, 66, 0)',
       underLineBottomColor: 'rgba(66, 66, 66, 0)',
@@ -36,7 +34,6 @@ const TradingViewWidget = ({ id, symbol }: Props) => {
 
     if (widgetContainer) {
       widgetContainer.appendChild(script);
-      setLoading(false);
     }
 
     return () => {};

@@ -3,30 +3,46 @@ import React, { useEffect } from 'react';
 interface Props {
   id: number;
   symbol: string;
+  interval: string;
 }
 
-export const TradingViewChart = ({ id, symbol }: Props) => {
+export const TradingViewChart = ({ id, symbol, interval }: Props) => {
   useEffect(() => {
     const script = document.createElement('script');
     script.src =
       'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
     script.async = true;
     script.innerHTML = JSON.stringify({
-      autosize: true,
       symbol: 'KRAKEN:PEPEUSD',
-      interval: '1',
+      interval: interval,
+      autosize: true,
+
       timezone: 'Etc/UTC',
       theme: 'dark',
       style: '1',
       locale: 'en',
       enable_publishing: false,
-      hide_legend: true,
-      allow_symbol_change: false,
+      hide_legend: false,
+      allow_symbol_change: true,
       save_image: false,
       calendar: false,
-      support_host: 'https://www.tradingview.com',
+      hide_side_toolbar: false,
+
+      studies: [
+        'RSI@tv-basicstudies',
+        'MASimple@tv-basicstudies',
+        'STD;Bull%Bear%Power',
+        'STD;MA%1Cross',
+        'STD;EMA',
+        'STD;TEMA',
+      ],
     });
-    document.body.appendChild(script);
+    const chart = document.querySelector(
+      `.tradingview-widget-container__widget--${id}`
+    );
+    if (chart) {
+      chart.appendChild(script);
+    }
 
     return () => {
       document.body.removeChild(script);
@@ -34,19 +50,8 @@ export const TradingViewChart = ({ id, symbol }: Props) => {
   }, []);
 
   return (
-    <div className="tradingview-widget-container">
-      <div className="tradingview-widget-container">
-        <div className="tradingview-widget-container__widget"></div>
-        <div className="tradingview-widget-copyright">
-          <a
-            href="https://www.tradingview.com/"
-            rel="noopener nofollow noreferrer"
-            target="_blank"
-          >
-            <span className="blue-text">Track all markets on TradingView</span>
-          </a>
-        </div>
-      </div>
-    </div>
+    <div
+      className={`tradingview-widget-container__widget tradingview-widget-container__widget--${id}`}
+    />
   );
 };
